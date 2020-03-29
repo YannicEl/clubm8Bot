@@ -20,13 +20,13 @@ const SCRAPE_URLS: ScrapeUrl[] = [
 ];
 
 export const clubm8bot: Handler = async (event, context) => {
-	// console.log(JSON.parse(event.body));
+	console.log(JSON.parse(event.body));
 
 	const body = JSON.parse(event.body);
 	const message = body.message;
 	const chatId = message.chat.id;
 
-	if (message !== '/prices')
+	if (!message.text.startsWith('/prices'))
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
