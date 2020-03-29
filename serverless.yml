@@ -1,0 +1,22 @@
+service: clubm8bot
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  profile: yannic-serverless
+  runtime: nodejs12.x
+  region: eu-central-1
+
+functions:
+  clubm8bot:
+    handler: src/index.clubm8bot
+    events:
+      - http:
+          path: bot
+          method: post
+          cors: true
+    environment:
+      TOKEN: 'YOUR_BOT_TOKEN'

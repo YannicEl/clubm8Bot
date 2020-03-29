@@ -1,0 +1,6 @@
+- name: clubm8bot endpoint returns 200
+  endpoint:
+    function: clubm8bot
+  request:
+    # body: ${file(./test_request.json)}
+  response: true
