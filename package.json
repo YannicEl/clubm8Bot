@@ -17,16 +17,19 @@
 	},
 	"homepage": "https://github.com/YannicEl/clubm8Bot#readme",
 	"dependencies": {
-		"@types/cheerio": "^0.22.17",
+		"aws-sdk": "^2.648.0",
 		"cheerio": "^1.0.0-rc.3",
-		"node-fetch": "^2.6.0"
+		"node-fetch": "^2.6.0",
+		"serverless": "^1.67.3"
 	},
 	"devDependencies": {
+		"@types/cheerio": "^0.22.17",
 		"@types/aws-lambda": "^8.10.44",
 		"@types/node": "^13.7.4",
 		"@types/node-fetch": "^2.5.5",
 		"serverless-offline": "^6.1.2",
 		"serverless-webpack": "^5.3.1",
+		"serverless-iam-roles-per-function": "^2.0.2",
 		"ts-loader": "^6.2.1",
 		"typescript": "^3.8.2",
 		"webpack": "^4.41.5"

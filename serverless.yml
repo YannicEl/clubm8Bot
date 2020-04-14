@@ -1,14 +1,22 @@
+org: yannicellhotka
+app: clubm8bot
 service: clubm8bot
 
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
   profile: yannic-serverless
   runtime: nodejs12.x
   region: eu-central-1
+  environment:
+    TOKEN: '1140103242:AAGW--SVpeZU47o2TClJGMGzmwSaFig3s0U'
+    DB_NAME: ${self:custom.dbName}
+    DB_REGION: ${self:custom.dbRegion}
+    DB_Arn: ${self:custom.dbArn}
 
 functions:
   clubm8bot:
@@ -18,5 +26,44 @@ functions:
           path: bot
           method: post
           cors: true
-    environment:
-      TOKEN: 'YOUR_BOT_TOKEN'
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:PutItem
+        Resource: ${self:custom.dbArn}
+
+  checkDiscount:
+    handler: src/index.checkDiscount
+    events:
+      - schedule: rate(1 hour)
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:Scan
+        Resource: ${self:custom.dbArn}
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  dbName: clubMateBot-${self:custom.stage}
+  dbRegion: clubMateBot-${self:provider.region}
+  dbArn:
+    Fn::GetAtt:
+      - ClubMateBot
+      - Arn
+
+resources:
+  Resources:
+    ClubMateBot:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: chatId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: chatId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dbName}
