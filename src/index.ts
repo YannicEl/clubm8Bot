@@ -8,8 +8,9 @@ import AWS from 'aws-sdk';
 const dynamodb = new AWS.DynamoDB();
 
 export const clubm8bot: Handler = async (event, context) => {
+	console.log(event);
 	console.log(JSON.parse(event.body));
-
+	
 	const body = JSON.parse(event.body);
 	const message = body.message;
 	const chatId = message.chat.id;
@@ -20,7 +21,7 @@ export const clubm8bot: Handler = async (event, context) => {
 	} else if (command.startsWith('/prices')) {
 		return pricesRoutine(event, chatId);
 	} else {
-		return errorReturn(400, 'Unknown command');
+		return errorReturn(200, 'Unknown command');
 	}
 };
 
