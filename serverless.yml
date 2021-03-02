@@ -10,10 +10,10 @@ plugins:
 provider:
   name: aws
   profile: yannic-serverless
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: eu-central-1
   environment:
-    TOKEN: '1140103242:AAGW--SVpeZU47o2TClJGMGzmwSaFig3s0U'
+    TOKEN: 'YOUR_TOKEN_HERE'
     DB_NAME: ${self:custom.dbName}
     DB_REGION: ${self:custom.dbRegion}
     DB_Arn: ${self:custom.dbArn}
